@@ -59,17 +59,21 @@ $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
 
 doc: $(GIT_SUBTREE_DOC) $(GIT_SUBTREE_HTML)
 
+man: $(GIT_SUBTREE_DOC)
+
+html: $(GIT_SUBTREE_HTML)
+
 install: $(GIT_SUBTREE)
 	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
 	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(gitexecdir)
 
 install-doc: install-man install-html
 
-install-man: $(GIT_SUBTREE_DOC)
+install-man: man
 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
 
-install-html: $(GIT_SUBTREE_HTML)
+install-html: html
 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
 
@@ -94,4 +98,4 @@ clean:
 	$(RM) $(GIT_SUBTREE)
 	$(RM) *.xml *.html *.1
 
-.PHONY: FORCE
+.PHONY: FORCE man html install-man install-html
